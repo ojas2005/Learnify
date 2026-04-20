@@ -1,0 +1,155 @@
+# =========================
+
+# OS & System Files
+
+# =========================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+
+# Logs
+
+# =========================
+
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+
+# Environment Variables
+
+# =========================
+
+.env
+.env.*
+*.env
+
+appsettings.json
+appsettings.*.json
+
+# =========================
+
+# Node / React
+
+# =========================
+
+node_modules/
+build/
+dist/
+.cache/
+.next/
+out/
+
+# Package managers
+
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# =========================
+
+# .NET / C#
+
+# =========================
+
+bin/
+obj/
+out/
+publish/
+
+# Visual Studio
+
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / VS Code
+
+.idea/
+.vscode/
+
+# =========================
+
+# Database
+
+# =========================
+
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# =========================
+
+# Azure / Deployment
+
+# =========================
+
+.publish/
+*.publishsettings
+.azure/
+
+# =========================
+
+# Secrets / Certificates
+
+# =========================
+
+*.pfx
+*.key
+*.pem
+*.crt
+
+# =========================
+
+# Test Results
+
+# =========================
+
+TestResults/
+coverage/
+*.coverage
+
+# =========================
+
+# Temporary Files
+
+# =========================
+
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# =========================
+
+# Generated Files
+
+# =========================
+
+*.generated.cs
+
+# =========================
+
+# Docker
+
+# =========================
+
+docker-compose.override.yml
+
+# =========================
+
+# Misc
+
+# =========================
+
+*.cache
+*.pid
