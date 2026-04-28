@@ -15,6 +15,7 @@ public interface ICourseCatalog
     Task<OperationResult<CourseOffering>> ReviseDetailsAsync(int courseId, int requestingAuthorId, CourseOffering updates);
     Task<OperationResult<CourseOffering>> SubmitForReviewAsync(int courseId, int requestingAuthorId);
     Task<OperationResult<CourseOffering>> ApproveForLiveAsync(int courseId);
+    Task<OperationResult<CourseOffering>> RejectCourseAsync(int courseId);
     Task<OperationResult> RemoveCourseAsync(int courseId, int requestingUserId, bool isAdmin);
     Task BumpRegistrationCountAsync(int courseId);
 }

@@ -156,6 +156,29 @@ public class CourseCatalog : ICourseCatalog
         return OperationResult<CourseOffering>.Ok(updated);
     }
 
+    public async Task<OperationResult<CourseOffering>> RejectCourseAsync(int courseId)
+    {
+        var course = await _store.GetByIdAsync(courseId);
+        if (course is null)
+            return OperationResult<CourseOffering>.NotFound("Course not found.");
+
+        if (!course.IsPublished)
+            return OperationResult<CourseOffering>.BusinessRuleViolation(
+                "Course must be submitted for review before it can be rejected.");
+
+        if (!course.IsApprovedByAdmin)
+            return OperationResult<CourseOffering>.Conflict("Course is already in rejected state.");
+
+        course.IsApprovedByAdmin = false;
+        course.IsPublished = false; // Reset to draft state
+        course.LastModifiedOn = DateTime.UtcNow;
+
+        var updated = await _store.UpdateCourseAsync(course);
+        _log.LogInformation("Course {CourseId} rejected and returned to draft state", courseId);
+
+        return OperationResult<CourseOffering>.Ok(updated);
+    }
+
     public async Task<OperationResult> RemoveCourseAsync(int courseId, int requestingUserId, bool isAdmin)
     {
         var course = await _store.GetByIdAsync(courseId);

@@ -8,6 +8,11 @@ public class IdentityDbContext : DbContext
     public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options) { }
 
     public DbSet<LearnerAccount> Accounts => Set<LearnerAccount>();
+    public DbSet<CourseRegistration> CourseRegistrations => Set<CourseRegistration>();
+    public DbSet<CourseFeedback> CourseFeedback => Set<CourseFeedback>();
+    public DbSet<CompletionCredential> CompletionCredentials => Set<CompletionCredential>();
+    public DbSet<ExamAttempt> ExamAttempts => Set<ExamAttempt>();
+    public DbSet<LessonWatchRecord> LessonWatchRecords => Set<LessonWatchRecord>();
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
