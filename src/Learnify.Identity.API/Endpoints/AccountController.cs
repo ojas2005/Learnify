@@ -127,6 +127,26 @@ public class AccountController : ControllerBase
         return result.Succeeded ? NoContent() : ConvertFailure(result);
     }
 
+    [HttpPost("{accountId:int}/reactivate")]
+    [Authorize(Roles = "Administrator")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ReactivateAccount(int accountId)
+    {
+        var result = await _identity.ReactivateAccountAsync(accountId);
+        return result.Succeeded ? NoContent() : ConvertFailure(result);
+    }
+
+    [HttpDelete("{accountId:int}")]
+    [Authorize(Roles = "Administrator")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteAccount(int accountId)
+    {
+        var result = await _identity.DeleteAccountAsync(accountId);
+        return result.Succeeded ? NoContent() : ConvertFailure(result);
+    }
+
     //helpers
 
     private int ExtractCallerId()

@@ -66,6 +66,21 @@ public class LearnerStore : ILearnerStore
         return account;
     }
 
+    public async Task<bool> HasActiveEnrollmentsAsync(int accountId)
+    {
+        return await _db.CourseRegistrations.AnyAsync(cr => cr.LearnerId == accountId && cr.Status == RegistrationStatus.Active);
+    }
+
+    public async Task DeleteAccountAsync(int accountId)
+    {
+        var account = await _db.Accounts.FindAsync(accountId);
+        if (account != null)
+        {
+            _db.Accounts.Remove(account);
+            await _db.SaveChangesAsync();
+        }
+    }
+
     public async Task SaveChangesAsync()
     {
         await _db.SaveChangesAsync();

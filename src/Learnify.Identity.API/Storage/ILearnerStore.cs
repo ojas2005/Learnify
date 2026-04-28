@@ -14,5 +14,7 @@ public interface ILearnerStore
     Task RecordLoginTimestampAsync(int accountId);
     Task<LearnerAccount> PersistNewAccountAsync(LearnerAccount account);
     Task<LearnerAccount> SaveUpdatedAccountAsync(LearnerAccount account);
+    Task<bool> HasActiveEnrollmentsAsync(int accountId);
+    Task DeleteAccountAsync(int accountId);
     Task SaveChangesAsync();
 }

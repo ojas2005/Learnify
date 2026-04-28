@@ -123,6 +123,14 @@ public class CourseCatalogController : ControllerBase
         return result.Succeeded ? Ok(ToCourseView(result.Payload!)) : Fail(result);
     }
 
+    [HttpPost("{courseId:int}/reject")]
+    [Authorize(Roles = "Administrator")]
+    public async Task<IActionResult> Reject(int courseId)
+    {
+        var result = await _catalog.RejectCourseAsync(courseId);
+        return result.Succeeded ? Ok(ToCourseView(result.Payload!)) : Fail(result);
+    }
+
     [HttpDelete("{courseId:int}")]
     [Authorize(Roles = "Instructor,Administrator")]
     public async Task<IActionResult> DeleteCourse(int courseId)

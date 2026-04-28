@@ -167,6 +167,39 @@ public class IdentityBroker : IIdentityBroker
         return OperationResult.Done;
     }
 
+    public async Task<OperationResult> ReactivateAccountAsync(int accountId)
+    {
+        var account = await _learnerStore.LookupByIdAsync(accountId);
+        if (account is null)
+            return OperationResult.NotFound("Account not found.");
+
+        if (account.IsActive)
+            return OperationResult.BusinessRuleViolation("Account is already active.");
+
+        account.IsActive = true;
+        await _learnerStore.SaveUpdatedAccountAsync(account);
+
+        _log.LogInformation("Account {AccountId} reactivated", accountId);
+        return OperationResult.Done;
+    }
+
+    public async Task<OperationResult> DeleteAccountAsync(int accountId)
+    {
+        var account = await _learnerStore.LookupByIdAsync(accountId);
+        if (account is null)
+            return OperationResult.NotFound("Account not found.");
+
+        // Check for active enrollments or other constraints
+        var hasEnrollments = await _learnerStore.HasActiveEnrollmentsAsync(accountId);
+        if (hasEnrollments)
+            return OperationResult.BusinessRuleViolation("Cannot delete account with active course enrollments.");
+
+        await _learnerStore.DeleteAccountAsync(accountId);
+
+        _log.LogWarning("Account {AccountId} permanently deleted", accountId);
+        return OperationResult.Done;
+    }
+
     public async Task<List<LearnerAccount>> ListByRoleAsync(PlatformRole role)
     {
         return await _learnerStore.FetchAllByRoleAsync(role);
