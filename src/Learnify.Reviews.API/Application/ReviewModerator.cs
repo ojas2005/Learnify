@@ -1,5 +1,6 @@
 using Learnify.Core.Core;
 using Learnify.Core.Domain;
+using Learnify.Reviews.API.Contracts;
 using Learnify.Reviews.API.Storage;
 using Microsoft.Extensions.Logging;
 

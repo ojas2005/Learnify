@@ -1,5 +1,6 @@
 using Learnify.Core.Core;
 using Learnify.Core.Domain;
+using Learnify.Core.Enums;
 using Learnify.Courses.API.Storage;
 using Microsoft.Extensions.Logging;
 
@@ -30,7 +31,8 @@ public class CourseCatalog : ICourseCatalog
         if (draft.ListPrice < 0)
             return OperationResult<CourseOffering>.BusinessRuleViolation("Price cannot be negative.");
 
-        //stamp creation metadata—never trust what the caller sends for these
+        // Ensure the author exists in the Courses database with the correct ID
+        await EnsureAuthorExistsAsync(authorId);
         draft.AuthorId = authorId;
         draft.CreatedOn = DateTime.UtcNow;
         draft.LastModifiedOn = DateTime.UtcNow;
@@ -215,5 +217,26 @@ public class CourseCatalog : ICourseCatalog
             return (false, "A cover image is required before submission.");
 
         return (true, null);
+    }
+
+    // Ensure the author exists in the Courses database by creating a minimal user record if needed
+    private async Task EnsureAuthorExistsAsync(int authorId)
+    {
+        try
+        {
+            // Try to get the author from the Courses database
+            var existingAuthor = await _store.GetAuthorByIdAsync(authorId);
+            if (existingAuthor != null)
+                return;
+
+            // Create a minimal author record using raw SQL to handle IDENTITY_INSERT
+            await _store.AddAuthorWithIdAsync(authorId, $"Instructor {authorId}", $"instructor{authorId}@learnify.com");
+            _log.LogInformation("Created author record for user {AuthorId}", authorId);
+        }
+        catch (Exception ex)
+        {
+            _log.LogError(ex, "Failed to ensure author exists for user {AuthorId}", authorId);
+            throw;
+        }
     }
 }

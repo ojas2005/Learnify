@@ -80,4 +80,28 @@ public class CourseStore : ICourseStore
             await _db.SaveChangesAsync();
         }
     }
+
+    public async Task<LearnerAccount?> GetAuthorByIdAsync(int authorId)
+    {
+        return await _db.Learners.FindAsync(authorId);
+    }
+
+    public async Task<LearnerAccount> AddAuthorAsync(LearnerAccount author)
+    {
+        _db.Learners.Add(author);
+        await _db.SaveChangesAsync();
+        return author;
+    }
+
+    public async Task AddAuthorWithIdAsync(int authorId, string displayName, string email)
+    {
+        var sql = @"
+            SET IDENTITY_INSERT LearnerAccounts ON;
+            INSERT INTO LearnerAccounts (Id, DisplayName, EmailAddress, HashedPassword, Role, ProfilePictureUrl, IsActive, RegisteredOn)
+            VALUES ({0}, {1}, {2}, 'synced_from_identity', 1, NULL, 1, GETDATE());
+            SET IDENTITY_INSERT LearnerAccounts OFF;
+        ";
+        
+        await _db.Database.ExecuteSqlRawAsync(sql, authorId, displayName, email);
+    }
 }

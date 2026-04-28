@@ -149,7 +149,7 @@ public class AnalyticsRepository : IAnalyticsRepository
                 AuthorName = c.Author.DisplayName,
                 EnrollmentCount = c.TotalRegistrations,
                 AverageRating = c.FeedbackEntries.Where(f => f.IsApproved).Average(f => (double?)f.StarRating) ?? 0,
-                Revenue = c.CourseRegistrations.Count(r => !string.IsNullOrEmpty(r.PaymentReference)) * c.ListPrice
+                Revenue = c.Registrations.Count(r => !string.IsNullOrEmpty(r.PaymentReference)) * c.ListPrice
             })
             .OrderByDescending(c => c.EnrollmentCount)
             .Take(limit)

@@ -14,4 +14,7 @@ public interface ICourseStore
     Task<CourseOffering> AddCourseAsync(CourseOffering course);
     Task<CourseOffering> UpdateCourseAsync(CourseOffering course);
     Task RemoveCourseAsync(int courseId);
+    Task<LearnerAccount?> GetAuthorByIdAsync(int authorId);
+    Task<LearnerAccount> AddAuthorAsync(LearnerAccount author);
+    Task AddAuthorWithIdAsync(int authorId, string displayName, string email);
 }

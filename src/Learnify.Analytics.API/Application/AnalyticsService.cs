@@ -1,5 +1,6 @@
 using Learnify.Analytics.API.Contracts;
 using Learnify.Analytics.API.Storage;
+using Learnify.Core.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace Learnify.Analytics.API.Application;
