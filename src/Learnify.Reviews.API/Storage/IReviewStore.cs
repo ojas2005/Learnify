@@ -10,5 +10,6 @@ public interface IReviewStore
     Task<List<CourseFeedback>> GetAllReviewsAsync();
     Task<ReviewModerationStats> GetModerationStatsAsync();
     Task<CourseFeedback> UpdateAsync(CourseFeedback review);
+    Task<CourseFeedback> InsertAsync(CourseFeedback review);
     Task DeleteAsync(int reviewId);
 }

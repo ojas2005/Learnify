@@ -39,4 +39,7 @@ public interface IAnalyticsRepository
     Task<List<TimeSeriesData>> GetUserGrowthDataAsync(int months = 12);
     Task<List<TimeSeriesData>> GetEnrollmentTrendsDataAsync(int months = 12);
     Task<List<TimeSeriesData>> GetRevenueTrendsDataAsync(int months = 12);
+
+    // Individual learner stats
+    Task<Dictionary<string, int>> GetLearnerStatsAsync(int learnerId);
 }

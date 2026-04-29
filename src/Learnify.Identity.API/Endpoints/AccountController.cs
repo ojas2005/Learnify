@@ -15,10 +15,12 @@ namespace Learnify.Identity.API.Endpoints;
 public class AccountController : ControllerBase
 {
     private readonly IIdentityBroker _identity;
+    private readonly IAuditLogger _audit;
 
-    public AccountController(IIdentityBroker identity)
+    public AccountController(IIdentityBroker identity, IAuditLogger audit)
     {
         _identity = identity;
+        _audit = audit;
     }
 
     //public endpoints
@@ -124,6 +126,13 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> SuspendAccount(int accountId)
     {
         var result = await _identity.SuspendAccountAsync(accountId);
+        if (result.Succeeded)
+        {
+            await _audit.LogAsync("Suspend", "Account", accountId.ToString(), 
+                before: new { IsActive = true }, 
+                after: new { IsActive = false }, 
+                actorId: ExtractCallerId());
+        }
         return result.Succeeded ? NoContent() : ConvertFailure(result);
     }
 
@@ -134,6 +143,13 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> ReactivateAccount(int accountId)
     {
         var result = await _identity.ReactivateAccountAsync(accountId);
+        if (result.Succeeded)
+        {
+            await _audit.LogAsync("Reactivate", "Account", accountId.ToString(), 
+                before: new { IsActive = false }, 
+                after: new { IsActive = true }, 
+                actorId: ExtractCallerId());
+        }
         return result.Succeeded ? NoContent() : ConvertFailure(result);
     }
 
@@ -144,6 +160,11 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> DeleteAccount(int accountId)
     {
         var result = await _identity.DeleteAccountAsync(accountId);
+        if (result.Succeeded)
+        {
+            await _audit.LogAsync("Delete", "Account", accountId.ToString(), 
+                actorId: ExtractCallerId());
+        }
         return result.Succeeded ? NoContent() : ConvertFailure(result);
     }
 

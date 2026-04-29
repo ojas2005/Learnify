@@ -128,4 +128,9 @@ public class AnalyticsService : IAnalyticsService
     {
         return await _repository.GetPopularCoursesAsync(10);
     }
+
+    public async Task<Dictionary<string, int>> GetLearnerStatsAsync(int learnerId)
+    {
+        return await _repository.GetLearnerStatsAsync(learnerId);
+    }
 }

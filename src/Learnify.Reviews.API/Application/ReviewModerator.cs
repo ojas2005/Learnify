@@ -80,4 +80,25 @@ public class ReviewModerator : IReviewModerator
         var stats = await _reviewStore.GetModerationStatsAsync();
         return stats;
     }
+
+    public async Task<OperationResult<CourseFeedback>> SubmitReviewAsync(int learnerId, int courseId, int rating, string comment)
+    {
+        if (rating < 1 || rating > 5)
+            return OperationResult<CourseFeedback>.BadRequest("Rating must be between 1 and 5.");
+
+        var review = new CourseFeedback
+        {
+            LearnerId = learnerId,
+            CourseId = courseId,
+            StarRating = rating,
+            ReviewText = comment,
+            SubmittedOn = DateTime.UtcNow,
+            IsApproved = false // require moderation by default
+        };
+
+        var saved = await _reviewStore.InsertAsync(review);
+        _log.LogInformation("New review submitted for course {CourseId} by learner {LearnerId}", courseId, learnerId);
+
+        return OperationResult<CourseFeedback>.Ok(saved);
+    }
 }

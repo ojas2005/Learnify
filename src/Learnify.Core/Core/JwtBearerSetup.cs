@@ -11,7 +11,12 @@ public static class JwtBearerSetup
     {
         var rawKey = config["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key is not configured.");
 
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opts =>
+        var authBuilder = services.AddAuthentication(opts =>
+            {
+                opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(opts =>
             {
                 opts.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -26,7 +31,22 @@ public static class JwtBearerSetup
                 };
             });
 
+        var googleClientId = config["Google:ClientId"];
+        var googleClientSecret = config["Google:ClientSecret"];
+
+        if (!string.IsNullOrEmpty(googleClientId) && !string.IsNullOrEmpty(googleClientSecret))
+        {
+            authBuilder.AddGoogle(opts =>
+            {
+                opts.ClientId = googleClientId;
+                opts.ClientSecret = googleClientSecret;
+            });
+        }
+
         services.AddAuthorization();
+        
+        services.AddHttpClient<IAuditLogger, AuditLogger>();
+        
         return services;
     }
 }

@@ -66,6 +66,13 @@ public class ReviewStore : IReviewStore
         return review;
     }
 
+    public async Task<CourseFeedback> InsertAsync(CourseFeedback review)
+    {
+        _db.CourseFeedback.Add(review);
+        await _db.SaveChangesAsync();
+        return review;
+    }
+
     public async Task DeleteAsync(int reviewId)
     {
         var review = await _db.CourseFeedback.FindAsync(reviewId);

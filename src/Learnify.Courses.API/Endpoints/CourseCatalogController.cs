@@ -15,10 +15,12 @@ namespace Learnify.Courses.API.Endpoints;
 public class CourseCatalogController : ControllerBase
 {
     private readonly ICourseCatalog _catalog;
+    private readonly IAuditLogger _audit;
 
-    public CourseCatalogController(ICourseCatalog catalog)
+    public CourseCatalogController(ICourseCatalog catalog, IAuditLogger audit)
     {
         _catalog = catalog;
+        _audit = audit;
     }
 
     // public browsing
@@ -120,6 +122,13 @@ public class CourseCatalogController : ControllerBase
     public async Task<IActionResult> Approve(int courseId)
     {
         var result = await _catalog.ApproveForLiveAsync(courseId);
+        if (result.Succeeded)
+        {
+            await _audit.LogAsync("Approve", "Course", courseId.ToString(), 
+                before: new { IsApproved = false }, 
+                after: new { IsApproved = true }, 
+                actorId: CallerId());
+        }
         return result.Succeeded ? Ok(ToCourseView(result.Payload!)) : Fail(result);
     }
 
@@ -128,6 +137,13 @@ public class CourseCatalogController : ControllerBase
     public async Task<IActionResult> Reject(int courseId)
     {
         var result = await _catalog.RejectCourseAsync(courseId);
+        if (result.Succeeded)
+        {
+            await _audit.LogAsync("Reject", "Course", courseId.ToString(), 
+                before: new { IsApproved = null as bool? }, 
+                after: new { IsApproved = false }, 
+                actorId: CallerId());
+        }
         return result.Succeeded ? Ok(ToCourseView(result.Payload!)) : Fail(result);
     }
 

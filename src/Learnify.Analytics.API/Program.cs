@@ -1,3 +1,4 @@
+using Learnify.Core.Core;
 using Learnify.Analytics.API.Application;
 using Learnify.Analytics.API.Storage;
 using Learnify.Analytics.API.DbContexts;
@@ -11,20 +12,14 @@ builder.Services.AddDbContext<AnalyticsDbContext>(options =>
 
 builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+builder.Services.AddScoped<IAuditStore, AuditStore>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add authentication
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer(options =>
-    {
-        options.Authority = builder.Configuration["Authentication:Authority"];
-        options.Audience = builder.Configuration["Authentication:Audience"];
-    });
-
-builder.Services.AddAuthorization();
+// Use shared auth setup
+builder.Services.AddLearnifyJwtAuth(builder.Configuration);
 
 var app = builder.Build();
 

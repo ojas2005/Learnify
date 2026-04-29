@@ -12,4 +12,5 @@ public interface IReviewModerator
     Task<List<CourseFeedback>> GetPendingReviewsAsync();
     Task<List<CourseFeedback>> GetAllReviewsAsync();
     Task<ReviewModerationStats> GetModerationStatsAsync();
+    Task<OperationResult<CourseFeedback>> SubmitReviewAsync(int learnerId, int courseId, int rating, string comment);
 }

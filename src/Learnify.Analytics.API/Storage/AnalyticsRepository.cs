@@ -210,4 +210,24 @@ public class AnalyticsRepository : IAnalyticsRepository
             .OrderBy(x => x.Date)
             .ToListAsync();
     }
+
+    public async Task<Dictionary<string, int>> GetLearnerStatsAsync(int learnerId)
+    {
+        var registrations = await _db.CourseRegistrations
+            .Where(r => r.LearnerId == learnerId)
+            .ToListAsync();
+
+        var totalEnrolled = registrations.Count;
+        var totalCompleted = registrations.Count(r => r.Status == RegistrationStatus.Completed);
+        var inProgress = totalEnrolled - totalCompleted;
+        var certificatesEarned = registrations.Count(r => r.CredentialIssued);
+
+        return new Dictionary<string, int>
+        {
+            { "totalCoursesEnrolled", totalEnrolled },
+            { "totalCoursesCompleted", totalCompleted },
+            { "coursesInProgress", inProgress },
+            { "certificatesEarned", certificatesEarned }
+        };
+    }
 }

@@ -11,6 +11,7 @@ public class AnalyticsDbContext : DbContext
     public DbSet<CourseOffering> CourseOfferings => Set<CourseOffering>();
     public DbSet<CourseRegistration> CourseRegistrations => Set<CourseRegistration>();
     public DbSet<CourseFeedback> CourseFeedback => Set<CourseFeedback>();
+    public DbSet<AuditEntry> AuditEntries => Set<AuditEntry>();
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
