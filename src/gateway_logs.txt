@@ -1,0 +1,36 @@
+Using launch settings from /Users/ojastiwari/sql-queries/src/Learnify.Gateway/Properties/launchSettings.json...
+Building...
+info: Yarp.ReverseProxy.Configuration.ConfigProvider.ConfigurationConfigProvider[1]
+      Loading proxy data from config.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5010
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /Users/ojastiwari/sql-queries/src/Learnify.Gateway
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[9]
+      Proxying to http://localhost:5001/api/accounts/external-login?provider=Google HTTP/2 RequestVersionOrLower 
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[56]
+      Received HTTP/1.1 response 302.
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[9]
+      Proxying to http://localhost:5001/signin-google?state=CfDJ8OdYVBuQ839FjIebz2JKW8p4AR2pzuwNkx73VOh36LW19diiFkVl56daJZEjUUiPp3UPe9lLrneiN_RIO1uE0lr90eB_aomIzW6FOe9lQbBFPbYEAK_g87d3T48Dg9SOb4Y_TJarb4sJPfkEnFcmERhKrAUdt4rAnG8YIE8iPBbZEVfo0ABzrcfKvPvQMTucM9-vhkMVFTtoN2LAABMzqeJkPT_1OzqDTX0MkM6sdCs46_owU9Lzl5S4RK1dTxyNpL7lSNsEeH0-A3mI_aLG7A3FFbb4UpBejIUglrK1-JL5Hw_fg2vZZCe8_qga_24YtPTKd8kOdOLQFv_9ega0fvY&iss=https%3A%2F%2Faccounts.google.com&code=4%2F0AeoWuM8xFZnA5773XWrje9vYCOEi-dP6uSrU0Cvkw_mYfnxP45ShELEYDpBCyDEbhkRZzA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=1&prompt=consent HTTP/2 RequestVersionOrLower 
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[56]
+      Received HTTP/1.1 response 500.
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[9]
+      Proxying to http://localhost:5001/signin-google?state=CfDJ8OdYVBuQ839FjIebz2JKW8p4AR2pzuwNkx73VOh36LW19diiFkVl56daJZEjUUiPp3UPe9lLrneiN_RIO1uE0lr90eB_aomIzW6FOe9lQbBFPbYEAK_g87d3T48Dg9SOb4Y_TJarb4sJPfkEnFcmERhKrAUdt4rAnG8YIE8iPBbZEVfo0ABzrcfKvPvQMTucM9-vhkMVFTtoN2LAABMzqeJkPT_1OzqDTX0MkM6sdCs46_owU9Lzl5S4RK1dTxyNpL7lSNsEeH0-A3mI_aLG7A3FFbb4UpBejIUglrK1-JL5Hw_fg2vZZCe8_qga_24YtPTKd8kOdOLQFv_9ega0fvY&iss=https%3A%2F%2Faccounts.google.com&code=4%2F0AeoWuM8xFZnA5773XWrje9vYCOEi-dP6uSrU0Cvkw_mYfnxP45ShELEYDpBCyDEbhkRZzA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=1&prompt=consent HTTP/2 RequestVersionOrLower 
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[56]
+      Received HTTP/1.1 response 500.
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[9]
+      Proxying to http://localhost:5001/signin-google?state=CfDJ8OdYVBuQ839FjIebz2JKW8p4AR2pzuwNkx73VOh36LW19diiFkVl56daJZEjUUiPp3UPe9lLrneiN_RIO1uE0lr90eB_aomIzW6FOe9lQbBFPbYEAK_g87d3T48Dg9SOb4Y_TJarb4sJPfkEnFcmERhKrAUdt4rAnG8YIE8iPBbZEVfo0ABzrcfKvPvQMTucM9-vhkMVFTtoN2LAABMzqeJkPT_1OzqDTX0MkM6sdCs46_owU9Lzl5S4RK1dTxyNpL7lSNsEeH0-A3mI_aLG7A3FFbb4UpBejIUglrK1-JL5Hw_fg2vZZCe8_qga_24YtPTKd8kOdOLQFv_9ega0fvY&iss=https%3A%2F%2Faccounts.google.com&code=4%2F0AeoWuM-JnsnmV69CNSgBZRGryvWaxKgH1Y_v-KnWZQe5QXXGR7rzhqeGF2tv2Ahtc5gOQA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=1&prompt=consent HTTP/2 RequestVersionOrLower 
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[56]
+      Received HTTP/1.1 response 500.
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[9]
+      Proxying to http://localhost:5001/api/accounts/external-login?provider=Google HTTP/2 RequestVersionOrLower 
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[56]
+      Received HTTP/1.1 response 302.
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[9]
+      Proxying to http://localhost:5001/signin-google?state=CfDJ8OdYVBuQ839FjIebz2JKW8pXM3RzPYFwmhTEngdNhNQIVYxIEIcJP-bPDXrkTHLXZ_RjePvuK9-W1Hpp8pJuTKY2YIKZ4z6UHSzfHkArlSo2z3U_jnm5r3vI54tajQs-LH5VJz232DhSQMoOTp1d1TdehKTJaQ-K2nTeBpUCr8I7Zptiggci4_XOOGQovVWfqMotS9O_VHaTCml6fD5jcbti7bZcgyDn6a0MsG9S6H73MsDM_0E2jSmv-9SMvLWSWcT5Sfjjla1QVUaieQ_be5uZYmmbCbobDFMCcK1YvvSZ34mh4BVbI9VN63E3Kr22YY-doRaYhOXrFQRS3d8hYC0&iss=https%3A%2F%2Faccounts.google.com&code=4%2F0AeoWuM_DqFEJy2FyKkm1Y9gZQz1tH75Xv1Kqd9UPZJswCWHPN3XYbZicYzw08MDV6VDgmA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=1&prompt=consent HTTP/2 RequestVersionOrLower 
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[56]
+      Received HTTP/1.1 response 500.

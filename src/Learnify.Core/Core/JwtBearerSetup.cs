@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Learnify.Core.Core;
 public static class JwtBearerSetup
@@ -15,6 +16,11 @@ public static class JwtBearerSetup
             {
                 opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultSignInScheme = "ExternalCookie";
+            })
+            .AddCookie("ExternalCookie", opts => 
+            {
+                opts.Cookie.SameSite = SameSiteMode.Lax;
             })
             .AddJwtBearer(opts =>
             {
@@ -40,6 +46,13 @@ public static class JwtBearerSetup
             {
                 opts.ClientId = googleClientId;
                 opts.ClientSecret = googleClientSecret;
+                opts.CallbackPath = "/signin-google";
+                opts.SaveTokens = true;
+                // Fix for "Correlation failed" on localhost through reverse proxy
+                opts.CorrelationCookie.SameSite = SameSiteMode.Lax;
+                opts.CorrelationCookie.HttpOnly = true;
+                opts.CorrelationCookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                opts.CorrelationCookie.Path = "/";
             });
         }
 

@@ -56,7 +56,9 @@ public class SeatReservation : ISeatReservation
     public async Task<List<CourseRegistration>> GetLearnerRegistrationsAsync(int learnerId)
     {
         // get all courses for a student
-        return await _seatStore.GetByLearnerAsync(learnerId);
+        var list = await _seatStore.GetByLearnerAsync(learnerId);
+        Console.WriteLine($"[DEBUG] Found {list.Count} registrations for LearnerId={learnerId}");
+        return list;
     }
 
     public async Task<List<CourseRegistration>> GetCourseRosterAsync(int courseId)

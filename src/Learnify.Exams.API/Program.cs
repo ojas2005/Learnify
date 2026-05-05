@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ExamsDbContext>(opts =>
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("ExamsDb")));
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("ExamsDb")));
 
 builder.Services.AddLearnifyJwtAuth(builder.Configuration);
 builder.Services.AddScoped<IExamStore, ExamStore>();

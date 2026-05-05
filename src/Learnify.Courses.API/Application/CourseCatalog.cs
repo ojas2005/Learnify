@@ -69,6 +69,11 @@ public class CourseCatalog : ICourseCatalog
         return await _store.GetPublishedAndApprovedAsync();
     }
 
+    public async Task<List<CourseOffering>> GetAllCoursesAsync()
+    {
+        return await _store.GetAllAsync();
+    }
+
     public async Task<List<CourseOffering>> SearchAsync(string terms)
     {
         if (string.IsNullOrWhiteSpace(terms))

@@ -10,6 +10,7 @@ public interface ICourseCatalog
     Task<List<CourseOffering>> GetByAuthorAsync(int authorId);
     Task<List<CourseOffering>> GetByTopicAsync(string topic);
     Task<List<CourseOffering>> BrowseLiveCatalogAsync();
+    Task<List<CourseOffering>> GetAllCoursesAsync();
     Task<List<CourseOffering>> SearchAsync(string terms);
     Task<List<CourseOffering>> GetHighlyRatedAsync(int limit);
     Task<OperationResult<CourseOffering>> ReviseDetailsAsync(int courseId, int requestingAuthorId, CourseOffering updates);

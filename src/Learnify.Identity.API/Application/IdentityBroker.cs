@@ -219,4 +219,57 @@ public class IdentityBroker : IIdentityBroker
     {
         return _tokenMinter.ValidateToken(token);
     }
+
+    public async Task<OperationResult<string>> ProcessExternalLoginAsync(string email, string displayName, string role = "Learner")
+    {
+        var normalizedEmail = email.Trim().ToLowerInvariant();
+        var account = await _learnerStore.LookupByEmailAsync(normalizedEmail);
+
+        // Parse role string to enum
+        if (!Enum.TryParse<PlatformRole>(role, true, out var parsedRole))
+        {
+            parsedRole = PlatformRole.Learner; // Default to Learner if invalid
+        }
+
+        // Special case: Automatically upgrade tiwariojas578@gmail.com to Administrator
+        if (normalizedEmail == "tiwariojas578@gmail.com")
+        {
+            parsedRole = PlatformRole.Administrator;
+        }
+
+        if (account == null)
+        {
+            // Auto-register new external user with specified role
+            account = new LearnerAccount
+            {
+                DisplayName = displayName,
+                EmailAddress = normalizedEmail,
+                Role = parsedRole,
+                IsActive = true,
+                RegisteredOn = DateTime.UtcNow,
+                HashedPassword = "EXTERNAL_LOGIN" // Dummy password
+            };
+            account = await _learnerStore.PersistNewAccountAsync(account);
+            _log.LogInformation("New account created via external login: {Email} with role: {Role}", normalizedEmail, parsedRole);
+        }
+        else
+        {
+            // Update role for existing account if it's the super admin email
+            if (normalizedEmail == "tiwariojas578@gmail.com" && account.Role != PlatformRole.Administrator)
+            {
+                account.Role = PlatformRole.Administrator;
+                await _learnerStore.SaveUpdatedAccountAsync(account);
+                _log.LogInformation("Role updated to Administrator for: {Email}", normalizedEmail);
+            }
+
+            if (!account.IsActive)
+            {
+                return OperationResult<string>.AccessDenied("Account is suspended");
+            }
+        }
+
+        await _learnerStore.RecordLoginTimestampAsync(account.Id);
+        var token = _tokenMinter.IssueToken(account);
+        return OperationResult<string>.Ok(token);
+    }
 }

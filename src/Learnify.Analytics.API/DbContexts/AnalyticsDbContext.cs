@@ -35,5 +35,17 @@ public class AnalyticsDbContext : DbContext
             .HasMany(l => l.FeedbackSubmissions)
             .WithOne(f => f.Learner)
             .HasForeignKey(f => f.LearnerId);
+
+        mb.Entity<CompletionCredential>()
+            .HasOne(c => c.Learner)
+            .WithMany()
+            .HasForeignKey(c => c.LearnerId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        mb.Entity<CompletionCredential>()
+            .HasOne(c => c.Course)
+            .WithMany()
+            .HasForeignKey(c => c.CourseId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

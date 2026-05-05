@@ -28,26 +28,26 @@ public class SeatStore : ISeatStore
 
     public async Task<CourseRegistration?> GetByIdAsync(int id)
     {
-        // get a registration by its id including user and course details
-        return await _db.Registrations.Include(r => r.Learner).Include(r => r.Course).FirstOrDefaultAsync(r => r.Id == id);
+        // get a registration by its id
+        return await _db.Registrations.FirstOrDefaultAsync(r => r.Id == id);
     }
 
     public async Task<List<CourseRegistration>> GetByLearnerAsync(int learnerId)
     {
         // get all registrations for a specific student
-        return await _db.Registrations.Include(r => r.Learner).Include(r => r.Course).Where(r => r.LearnerId == learnerId).ToListAsync();
+        return await _db.Registrations.Where(r => r.LearnerId == learnerId).ToListAsync();
     }
 
     public async Task<List<CourseRegistration>> GetByCourseAsync(int courseId)
     {
         // get all students registered for a specific course
-        return await _db.Registrations.Include(r => r.Learner).Include(r => r.Course).Where(r => r.CourseId == courseId).ToListAsync();
+        return await _db.Registrations.Where(r => r.CourseId == courseId).ToListAsync();
     }
 
     public async Task<List<CourseRegistration>> GetByStatusAsync(int learnerId, RegistrationStatus status)
     {
         // filter registrations by state like active or finished
-        return await _db.Registrations.Include(r => r.Learner).Include(r => r.Course).Where(r => r.LearnerId == learnerId && r.Status == status).ToListAsync();
+        return await _db.Registrations.Where(r => r.LearnerId == learnerId && r.Status == status).ToListAsync();
     }
 
     public async Task<bool> AlreadyRegisteredAsync(int learnerId, int courseId)

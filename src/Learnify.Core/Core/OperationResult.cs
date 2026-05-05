@@ -37,6 +37,11 @@ public sealed class OperationResult<T>
         return new OperationResult<T> { Succeeded = false, FailureReason = reason, Kind = FailureKind.BusinessRuleViolation };
     }
 
+    public static OperationResult<T> BadRequest(string reason)
+    {
+        return new OperationResult<T> { Succeeded = false, FailureReason = reason, Kind = FailureKind.BadRequest };
+    }
+
 // Maps the payload to a different type while preserving failure state.
     public OperationResult<TOut> Map<TOut>(Func<T, TOut> transform)
     {
@@ -75,6 +80,11 @@ public sealed class OperationResult
     {
         return new OperationResult { Succeeded = false, FailureReason = reason, Kind = FailureKind.BusinessRuleViolation };
     }
+
+    public static OperationResult BadRequest(string reason)
+    {
+        return new OperationResult { Succeeded = false, FailureReason = reason, Kind = FailureKind.BadRequest };
+    }
 }
 
 public enum FailureKind
@@ -82,5 +92,6 @@ public enum FailureKind
     NotFound,
     Conflict,
     AccessDenied,
-    BusinessRuleViolation
+    BusinessRuleViolation,
+    BadRequest
 }

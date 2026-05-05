@@ -9,12 +9,46 @@ using Learnify.Core.Domain;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
+    options.KnownProxies.Clear();
+    options.KnownNetworks.Clear();
+});
 
 //Data
 builder.Services.AddDbContext<IdentityDbContext>(opts =>
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("IdentityDb")));
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("IdentityDb")));
+
+// Data Protection (required for OAuth correlation through reverse proxy)
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "DataProtectionKeys")))
+    .SetApplicationName("LearnifyIdentity");
+
+// Cookie Policy (required for OAuth correlation through reverse proxy)
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.Lax;
+    options.Secure = CookieSecurePolicy.SameAsRequest;
+    options.OnAppendCookie = cookieContext =>
+    {
+        if (cookieContext.CookieOptions.SameSite == SameSiteMode.None)
+        {
+            cookieContext.CookieOptions.SameSite = SameSiteMode.Unspecified;
+        }
+    };
+    options.OnDeleteCookie = cookieContext =>
+    {
+        if (cookieContext.CookieOptions.SameSite == SameSiteMode.None)
+        {
+            cookieContext.CookieOptions.SameSite = SameSiteMode.Unspecified;
+        }
+    };
+});
 
 //Auth
 builder.Services.AddLearnifyJwtAuth(builder.Configuration);
@@ -24,6 +58,8 @@ builder.Services.AddScoped<ILearnerStore,LearnerStore>();
 builder.Services.AddSingleton<TokenMinter>();
 builder.Services.AddScoped<IIdentityBroker,IdentityBroker>();
 builder.Services.AddScoped<IPasswordHasher<LearnerAccount>,PasswordHasher<LearnerAccount>>();
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IAuditLogger, AuditLogger>();
 
 //Infrastructure
 builder.Services.AddControllers()
@@ -68,6 +104,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+app.UseForwardedHeaders();
+app.UseCookiePolicy();
 app.UseSwagger();
 app.UseSwaggerUI(c => 
 {
@@ -75,7 +113,7 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = string.Empty; //serves swagger ui at root,port-5005
 });
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

@@ -16,5 +16,6 @@ public interface IIdentityBroker
     Task<OperationResult> DeleteAccountAsync(int accountId);
     Task<List<LearnerAccount>> ListByRoleAsync(PlatformRole role);
     Task<List<LearnerAccount>> FindAccountsAsync(string searchTerm);
+    Task<OperationResult<string>> ProcessExternalLoginAsync(string email, string displayName, string role = "Learner");
     bool ValidateToken(string token);
 }

@@ -20,11 +20,11 @@ builder.Services.AddReverseProxy()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI(c =>
+if (app.Environment.IsDevelopment())
 {
-    c.RoutePrefix = "swagger";
-});
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseCors();
 app.MapControllers();

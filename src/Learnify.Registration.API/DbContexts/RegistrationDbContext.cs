@@ -28,6 +28,11 @@ public class RegistrationDbContext : DbContext
             // make sure a student cant join the same course twice
             e.HasIndex(r => new { r.LearnerId, r.CourseId }).IsUnique();
             e.Property(r => r.PaymentReference).HasMaxLength(100);
+
+            // Cross-service navigation - don't create FKs in this DB
+            e.Ignore(r => r.Course);
+            e.Ignore(r => r.Learner);
+            e.Ignore(r => r.WatchRecords);
         });
     }
 }

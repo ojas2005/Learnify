@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<TrackingDbContext>(opts =>
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("TrackingDb")));
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("TrackingDb")));
 
 builder.Services.AddLearnifyJwtAuth(builder.Configuration);
 builder.Services.AddScoped<IWatchRecordStore, WatchRecordStore>();

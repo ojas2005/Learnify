@@ -37,6 +37,11 @@ public class CourseStore : ICourseStore
         return await _db.Courses.Include(c => c.Author).Include(c => c.FeedbackEntries).Where(c => c.IsPublished && c.IsApprovedByAdmin).OrderByDescending(c => c.CreatedOn).ToListAsync();
     }
 
+    public async Task<List<CourseOffering>> GetAllAsync()
+    {
+        return await _db.Courses.Include(c => c.Author).Include(c => c.FeedbackEntries).OrderByDescending(c => c.CreatedOn).ToListAsync();
+    }
+
     public async Task<List<CourseOffering>> FullTextSearchAsync(string terms)
     {
         return await _db.Courses.Include(c => c.Author).Include(c => c.FeedbackEntries).Where(c => c.IsPublished && c.IsApprovedByAdmin && (c.Title.Contains(terms) || (c.Synopsis != null && c.Synopsis.Contains(terms)))).ToListAsync();
@@ -96,10 +101,11 @@ public class CourseStore : ICourseStore
     public async Task AddAuthorWithIdAsync(int authorId, string displayName, string email)
     {
         var sql = @"
-            SET IDENTITY_INSERT LearnerAccounts ON;
-            INSERT INTO LearnerAccounts (Id, DisplayName, EmailAddress, HashedPassword, Role, ProfilePictureUrl, IsActive, RegisteredOn)
-            VALUES ({0}, {1}, {2}, 'synced_from_identity', 1, NULL, 1, GETDATE());
-            SET IDENTITY_INSERT LearnerAccounts OFF;
+            INSERT INTO ""LearnerAccounts"" (""Id"", ""DisplayName"", ""EmailAddress"", ""HashedPassword"", ""Role"", ""ProfilePictureUrl"", ""IsActive"", ""RegisteredOn"")
+            VALUES ({0}, {1}, {2}, 'synced_from_identity', 1, NULL, true, CURRENT_TIMESTAMP);
+            
+            -- Sync the sequence so next auto-inc doesn't fail
+            SELECT setval(pg_get_serial_sequence('""LearnerAccounts""', 'Id'), MAX(""Id"")) FROM ""LearnerAccounts"";
         ";
         
         await _db.Database.ExecuteSqlRawAsync(sql, authorId, displayName, email);

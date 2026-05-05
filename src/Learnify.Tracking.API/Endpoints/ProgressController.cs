@@ -67,6 +67,7 @@ public class ProgressController : ControllerBase
     [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> GetFullHistory(int learnerId)
     {
+        if (!IsSuperAdmin()) return Forbid();
         var records = await _journal.GetAllWatchHistoryAsync(learnerId);
         return Ok(records.Select(ToView));
     }
@@ -85,6 +86,7 @@ public class ProgressController : ControllerBase
     [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> WipeCourseProgress(int courseId, [FromQuery] int learnerId)
     {
+        if (!IsSuperAdmin()) return Forbid();
         await _journal.WipeProgressForCourseAsync(learnerId, courseId);
         return NoContent();
     }
@@ -93,6 +95,12 @@ public class ProgressController : ControllerBase
     private int CallerId()
     {
         return int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id) ? id : 0;
+    }
+
+    private bool IsSuperAdmin()
+    {
+        var email = User.FindFirstValue(System.Security.Claims.ClaimTypes.Email);
+        return email?.ToLowerInvariant() == "tiwariojas578@gmail.com";
     }
 
     // maps an operation result failure to the right http error response

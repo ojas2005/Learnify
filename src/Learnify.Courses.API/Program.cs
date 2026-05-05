@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<CourseDbContext>(opts =>
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("CoursesDb")));
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("CoursesDb")));
 
 builder.Services.AddLearnifyJwtAuth(builder.Configuration);
 
@@ -22,7 +22,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment()) { app.UseSwagger(); app.UseSwaggerUI(); }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

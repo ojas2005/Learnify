@@ -20,6 +20,10 @@ public class CurriculumDbContext : DbContext
             e.HasKey(l => l.Id);
             e.Property(l => l.Title).HasMaxLength(200);
             e.HasIndex(l => new { l.CourseId, l.SequencePosition });
+
+            // Cross-service navigation - don't create FKs in this DB
+            e.Ignore(l => l.Course);
+            e.Ignore(l => l.WatchRecords);
         });
     }
 }

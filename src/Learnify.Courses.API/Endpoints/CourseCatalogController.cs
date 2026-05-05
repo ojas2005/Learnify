@@ -31,6 +31,13 @@ public class CourseCatalogController : ControllerBase
         return Ok((await _catalog.BrowseLiveCatalogAsync()).Select(ToCourseView));
     }
 
+    [HttpGet("admin/all")]
+    [Authorize(Roles = "Administrator")]
+    public async Task<IActionResult> BrowseAll()
+    {
+        return Ok((await _catalog.GetAllCoursesAsync()).Select(ToCourseView));
+    }
+
     [HttpGet("search")]
     public async Task<IActionResult> Search([FromQuery] string q)
     {
@@ -115,18 +122,25 @@ public class CourseCatalogController : ControllerBase
         return result.Succeeded ? Ok(ToCourseView(result.Payload!)) : Fail(result);
     }
 
-    // admin endpoints
+    // admin endpoints - restricted to tiwariojas578@gmail.com only
+
+    private bool IsSuperAdmin()
+    {
+        var email = User.FindFirstValue(System.Security.Claims.ClaimTypes.Email);
+        return email?.ToLowerInvariant() == "tiwariojas578@gmail.com";
+    }
 
     [HttpPost("{courseId:int}/approve")]
     [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Approve(int courseId)
     {
+        if (!IsSuperAdmin()) return Forbid();
         var result = await _catalog.ApproveForLiveAsync(courseId);
         if (result.Succeeded)
         {
-            await _audit.LogAsync("Approve", "Course", courseId.ToString(), 
-                before: new { IsApproved = false }, 
-                after: new { IsApproved = true }, 
+            await _audit.LogAsync("Approve", "Course", courseId.ToString(),
+                before: new { IsApproved = false },
+                after: new { IsApproved = true },
                 actorId: CallerId());
         }
         return result.Succeeded ? Ok(ToCourseView(result.Payload!)) : Fail(result);
@@ -136,12 +150,13 @@ public class CourseCatalogController : ControllerBase
     [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> Reject(int courseId)
     {
+        if (!IsSuperAdmin()) return Forbid();
         var result = await _catalog.RejectCourseAsync(courseId);
         if (result.Succeeded)
         {
-            await _audit.LogAsync("Reject", "Course", courseId.ToString(), 
-                before: new { IsApproved = null as bool? }, 
-                after: new { IsApproved = false }, 
+            await _audit.LogAsync("Reject", "Course", courseId.ToString(),
+                before: new { IsApproved = null as bool? },
+                after: new { IsApproved = false },
                 actorId: CallerId());
         }
         return result.Succeeded ? Ok(ToCourseView(result.Payload!)) : Fail(result);
@@ -152,6 +167,7 @@ public class CourseCatalogController : ControllerBase
     public async Task<IActionResult> DeleteCourse(int courseId)
     {
         var isAdmin = User.IsInRole("Administrator");
+        if (isAdmin && !IsSuperAdmin()) return Forbid();
         var result = await _catalog.RemoveCourseAsync(courseId, CallerId(), isAdmin);
         return result.Succeeded ? NoContent() : Fail(result);
     }

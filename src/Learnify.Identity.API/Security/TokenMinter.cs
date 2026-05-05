@@ -85,12 +85,11 @@ public sealed class TokenMinter
     {
         return
         [
-            new(JwtRegisteredClaimNames.Sub, account.Id.ToString()),
-            new(JwtRegisteredClaimNames.Email, account.EmailAddress),
-            new(JwtRegisteredClaimNames.Name, account.DisplayName),
-            new(ClaimTypes.Role, account.Role.ToString()),
-            //unique token id helps with potential revocation list lookups later
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
+            new(System.Security.Claims.ClaimTypes.NameIdentifier, account.Id.ToString()),
+            new(System.Security.Claims.ClaimTypes.Email, account.EmailAddress),
+            new(System.Security.Claims.ClaimTypes.Name, account.DisplayName),
+            new(System.Security.Claims.ClaimTypes.Role, account.Role.ToString()),
+            new(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
         ];
     }
 }

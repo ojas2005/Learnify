@@ -9,4 +9,5 @@ public interface IAnalyticsService
     Task<List<TimeSeriesData>> GetEnrollmentTrendsAsync(int months = 12);
     Task<List<TimeSeriesData>> GetRevenueTrendsAsync(int months = 12);
     Task<Dictionary<string, int>> GetLearnerStatsAsync(int learnerId);
+    Task<Dictionary<string, int>> GetOverallStatsAsync();
 }

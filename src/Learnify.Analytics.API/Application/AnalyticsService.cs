@@ -133,4 +133,20 @@ public class AnalyticsService : IAnalyticsService
     {
         return await _repository.GetLearnerStatsAsync(learnerId);
     }
+
+    public async Task<Dictionary<string, int>> GetOverallStatsAsync()
+    {
+        var users = await GetUserAnalyticsAsync();
+        var courses = await GetCourseAnalyticsAsync();
+        var enrollments = await GetEnrollmentAnalyticsAsync();
+
+        return new Dictionary<string, int>
+        {
+            { "totalUsers", users.TotalUsers },
+            { "totalCourses", courses.TotalCourses },
+            { "totalEnrollments", enrollments.TotalEnrollments },
+            { "activeUsers", users.ActiveUsers },
+            { "publishedCourses", courses.PublishedCourses }
+        };
+    }
 }

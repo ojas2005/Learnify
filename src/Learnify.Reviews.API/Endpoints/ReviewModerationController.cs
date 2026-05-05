@@ -4,6 +4,7 @@ using Learnify.Reviews.API.Application;
 using Learnify.Reviews.API.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Learnify.Reviews.API.Endpoints;
 
@@ -20,10 +21,17 @@ public class ReviewModerationController : ControllerBase
         _reviewModerator = reviewModerator;
     }
 
+    private bool IsSuperAdmin()
+    {
+        var email = User.FindFirstValue(System.Security.Claims.ClaimTypes.Email);
+        return email?.ToLowerInvariant() == "tiwariojas578@gmail.com";
+    }
+
     [HttpGet("pending")]
     [ProducesResponseType(typeof(IEnumerable<ReviewSummary>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPendingReviews()
     {
+        if (!IsSuperAdmin()) return Forbid();
         var reviews = await _reviewModerator.GetPendingReviewsAsync();
         var summaries = reviews.Select(ToReviewSummary);
         return Ok(summaries);
@@ -33,6 +41,7 @@ public class ReviewModerationController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<ReviewSummary>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllReviews()
     {
+        if (!IsSuperAdmin()) return Forbid();
         var reviews = await _reviewModerator.GetAllReviewsAsync();
         var summaries = reviews.Select(ToReviewSummary);
         return Ok(summaries);
@@ -42,6 +51,7 @@ public class ReviewModerationController : ControllerBase
     [ProducesResponseType(typeof(ReviewModerationStats), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetModerationStats()
     {
+        if (!IsSuperAdmin()) return Forbid();
         var stats = await _reviewModerator.GetModerationStatsAsync();
         return Ok(stats);
     }
@@ -52,6 +62,7 @@ public class ReviewModerationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> ApproveReview(int reviewId)
     {
+        if (!IsSuperAdmin()) return Forbid();
         var result = await _reviewModerator.ApproveReviewAsync(reviewId);
         return result.Succeeded ? Ok(ToReviewSummary(result.Payload!)) : ConvertFailure(result);
     }
@@ -62,6 +73,7 @@ public class ReviewModerationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> RejectReview(int reviewId)
     {
+        if (!IsSuperAdmin()) return Forbid();
         var result = await _reviewModerator.RejectReviewAsync(reviewId);
         return result.Succeeded ? Ok(ToReviewSummary(result.Payload!)) : ConvertFailure(result);
     }
@@ -71,6 +83,7 @@ public class ReviewModerationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteReview(int reviewId)
     {
+        if (!IsSuperAdmin()) return Forbid();
         var result = await _reviewModerator.DeleteReviewAsync(reviewId);
         return result.Succeeded ? NoContent() : ConvertFailure(result);
     }

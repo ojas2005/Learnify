@@ -5,7 +5,9 @@ using Learnify.Identity.API.Application;
 using Learnify.Identity.API.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace Learnify.Identity.API.Endpoints;
 
@@ -16,11 +18,13 @@ public class AccountController : ControllerBase
 {
     private readonly IIdentityBroker _identity;
     private readonly IAuditLogger _audit;
+    private readonly ILogger<AccountController> _logger;
 
-    public AccountController(IIdentityBroker identity, IAuditLogger audit)
+    public AccountController(IIdentityBroker identity, IAuditLogger audit, ILogger<AccountController> logger)
     {
         _identity = identity;
         _audit = audit;
+        _logger = logger;
     }
 
     //public endpoints
@@ -34,9 +38,13 @@ public class AccountController : ControllerBase
         var result = await _identity.RegisterNewAccountAsync(
             request.DisplayName,request.Email,request.Password,request.Role);
 
-        return result.Succeeded
-            ? CreatedAtAction(nameof(GetMyProfile),ToSummary(result.Payload!))
-            : ConvertFailure(result);
+        if (result.Succeeded)
+        {
+            await _audit.LogAsync("Registration", "Account", result.Payload!.Id.ToString(), null, ToSummary(result.Payload!), result.Payload!.Id);
+            return CreatedAtAction(nameof(GetMyProfile), ToSummary(result.Payload!));
+        }
+
+        return ConvertFailure(result);
     }
 
     [HttpPost("login")]
@@ -96,13 +104,20 @@ public class AccountController : ControllerBase
         return result.Succeeded ? NoContent() : ConvertFailure(result);
     }
 
-    //Admin-only endpoints
+    //Admin-only endpoints - restricted to tiwariojas578@gmail.com only
+
+    private bool IsSuperAdmin()
+    {
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        return email?.ToLowerInvariant() == "tiwariojas578@gmail.com";
+    }
 
     [HttpGet("by-role/{role}")]
     [Authorize(Roles = "Administrator")]
     [ProducesResponseType(typeof(IEnumerable<AccountSummary>),StatusCodes.Status200OK)]
     public async Task<IActionResult> ListByRole(PlatformRole role)
     {
+        if (!IsSuperAdmin()) return Forbid();
         var accounts = await _identity.ListByRoleAsync(role);
         return Ok(accounts.Select(ToSummary));
     }
@@ -112,6 +127,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<AccountSummary>),StatusCodes.Status200OK)]
     public async Task<IActionResult> Search([FromQuery] string term)
     {
+        if (!IsSuperAdmin()) return Forbid();
         if (string.IsNullOrWhiteSpace(term))
             return BadRequest(new { message = "Search term empty,enter valid term" });
 
@@ -125,12 +141,13 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> SuspendAccount(int accountId)
     {
+        if (!IsSuperAdmin()) return Forbid();
         var result = await _identity.SuspendAccountAsync(accountId);
         if (result.Succeeded)
         {
-            await _audit.LogAsync("Suspend", "Account", accountId.ToString(), 
-                before: new { IsActive = true }, 
-                after: new { IsActive = false }, 
+            await _audit.LogAsync("Suspend", "Account", accountId.ToString(),
+                before: new { IsActive = true },
+                after: new { IsActive = false },
                 actorId: ExtractCallerId());
         }
         return result.Succeeded ? NoContent() : ConvertFailure(result);
@@ -166,6 +183,43 @@ public class AccountController : ControllerBase
                 actorId: ExtractCallerId());
         }
         return result.Succeeded ? NoContent() : ConvertFailure(result);
+    }
+
+    [HttpGet("external-login")]
+    public IActionResult ExternalLogin(string provider = "Google", string returnUrl = "/", string role = "Learner")
+    {
+        // When using 5001 directly, the redirect URI should also be on 5001.
+        // Google Console MUST have http://localhost:5001/signin-google registered.
+        var properties = new Microsoft.AspNetCore.Authentication.AuthenticationProperties
+        {
+            RedirectUri = Url.Action(nameof(GoogleCallback), "Account", new { returnUrl, role })
+        };
+        return Challenge(properties, provider);
+    }
+
+    [HttpGet("google-cb")]
+    public async Task<IActionResult> GoogleCallback(string returnUrl = "/", string remoteError = null, string role = "Learner")
+    {
+        if (remoteError != null)
+            return BadRequest(new { message = $"Error from external provider: {remoteError}" });
+
+        var info = await HttpContext.AuthenticateAsync("ExternalCookie");
+        if (info?.Principal == null)
+            return BadRequest(new { message = "Error loading external login information." });
+
+        var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+        var name = info.Principal.FindFirstValue(ClaimTypes.Name);
+
+        // Sign out from the temporary cookie
+        await HttpContext.SignOutAsync("ExternalCookie");
+
+        var result = await _identity.ProcessExternalLoginAsync(email, name, role);
+        if (!result.Succeeded)
+            return ConvertFailure(result);
+
+        // Redirect back to the Vite UI with token
+        var uiUrl = "http://localhost:5173";
+        return Redirect($"{uiUrl}/#login-success?token={Uri.EscapeDataString(result.Payload!)}");
     }
 
     //helpers

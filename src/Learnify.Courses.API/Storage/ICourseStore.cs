@@ -8,6 +8,7 @@ public interface ICourseStore
     Task<List<CourseOffering>> GetByAuthorAsync(int authorId);
     Task<List<CourseOffering>> GetByTopicAsync(string topic);
     Task<List<CourseOffering>> GetPublishedAndApprovedAsync();
+    Task<List<CourseOffering>> GetAllAsync();
     Task<List<CourseOffering>> FullTextSearchAsync(string terms);
     Task<List<CourseOffering>> GetTopRatedAsync(int limit);
     Task IncrementRegistrationCountAsync(int courseId);

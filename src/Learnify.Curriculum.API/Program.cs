@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<CurriculumDbContext>(opts =>
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("CurriculumDb")));
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("CurriculumDb")));
 
 builder.Services.AddLearnifyJwtAuth(builder.Configuration);
 builder.Services.AddScoped<ISyllabusStore, SyllabusStore>();
@@ -32,4 +32,12 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Drop stale cross-service FK constraints
+using (var scope = app.Services.CreateScope())
+{
+    var ctx = scope.ServiceProvider.GetRequiredService<CurriculumDbContext>();
+    try { ctx.Database.ExecuteSqlRaw("ALTER TABLE \"CurriculumLessons\" DROP CONSTRAINT IF EXISTS \"FK_CurriculumLessons_CourseOffering_CourseId\""); } catch { }
+}
+
 app.Run();

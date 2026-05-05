@@ -15,10 +15,12 @@ namespace Learnify.Registration.API.Endpoints;
 public class RegistrationController : ControllerBase
 {
     private readonly ISeatReservation _seats;
+    private readonly IAuditLogger _audit;
 
-    public RegistrationController(ISeatReservation seats)
+    public RegistrationController(ISeatReservation seats, IAuditLogger audit)
     {
         _seats = seats;
+        _audit = audit;
     }
 
     [HttpPost]
@@ -27,10 +29,12 @@ public class RegistrationController : ControllerBase
     {
         // sign up a student for a course
         var learnerId = CallerId();
+        Console.WriteLine($"[DEBUG] Enrollment requested: LearnerId={learnerId}, CourseId={req.CourseId}");
         var result = await _seats.ClaimSeatAsync(learnerId, req.CourseId);
         if (result.Succeeded)
         {
-            return CreatedAtAction(nameof(GetRegistration), new { registrationId = result.Payload!.Id }, ToView(result.Payload));
+            await _audit.LogAsync("Enrollment", "Course", req.CourseId.ToString(), null, result.Payload, learnerId);
+            return Ok(ToView(result.Payload!));
         }
         return Fail(result);
     }
