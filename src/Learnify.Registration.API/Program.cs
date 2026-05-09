@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Learnify.Core.Core;
 using Learnify.Registration.API.Application;
 using Learnify.Registration.API.DbContexts;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 // set up the web app
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.Configure<ForwardedHeadersOptions>(options => { options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost; options.KnownProxies.Clear(); options.KnownNetworks.Clear(); });
 
 // connect to the database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -27,6 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseForwardedHeaders();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -35,7 +38,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 // show swagger help docs if in development
-if (app.Environment.IsDevelopment())
+if (true) // Enabled for OpenShift
 {
     app.UseSwagger();
     app.UseSwaggerUI();

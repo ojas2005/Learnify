@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Learnify.Core.Core;
 using Learnify.Courses.API.Application;
 using Learnify.Courses.API.DbContexts;
@@ -5,6 +6,7 @@ using Learnify.Courses.API.Storage;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.Configure<ForwardedHeadersOptions>(options => { options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost; options.KnownProxies.Clear(); options.KnownNetworks.Clear(); });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<CourseDbContext>(opts =>
@@ -20,6 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseForwardedHeaders();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -31,7 +34,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-if (app.Environment.IsDevelopment()) { app.UseSwagger(); app.UseSwaggerUI(); }
+app.UseSwagger(); app.UseSwaggerUI();
 
 // app.UseHttpsRedirection();
 app.UseAuthentication();

@@ -1,18 +1,20 @@
-# Build stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 8080
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-# Copy everything from the context (should be src1 root)
+COPY ["Learnify.Core/Learnify.Core.csproj", "Learnify.Core/"]
+COPY ["Learnify.Identity.API/Learnify.Identity.API.csproj", "Learnify.Identity.API/"]
+RUN dotnet restore "Learnify.Identity.API/Learnify.Identity.API.csproj"
 COPY . .
-# Restore and publish the specific project
-RUN dotnet publish Learnify.Identity.API/Learnify.Identity.API.csproj -c Release -o /app/out
+WORKDIR "/src/Learnify.Identity.API"
+RUN dotnet build "Learnify.Identity.API.csproj" -c Release -o /app/build
 
-# Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM build AS publish
+RUN dotnet publish "Learnify.Identity.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/out .
-
-# Render needs this
-ENV ASPNETCORE_URLS=http://0.0.0.0:10000
-EXPOSE 10000
-
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Learnify.Identity.API.dll"]
