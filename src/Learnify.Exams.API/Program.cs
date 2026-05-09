@@ -6,8 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ExamsDbContext>(opts =>
-    opts.UseNpgsql(builder.Configuration.GetConnectionString("ExamsDb")));
+    opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddLearnifyJwtAuth(builder.Configuration);
 builder.Services.AddScoped<IExamStore, ExamStore>();
@@ -19,6 +20,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ExamsDbContext>();
+    db.Database.EnsureCreated();
+}
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {

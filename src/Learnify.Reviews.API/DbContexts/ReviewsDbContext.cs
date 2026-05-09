@@ -13,7 +13,7 @@ public class ReviewsDbContext : DbContext
     {
         mb.Entity<CourseFeedback>(e =>
         {
-            e.ToTable("CourseFeedback");
+            e.ToTable("Reviews_Comments");
             e.HasKey(f => f.Id);
             e.Property(f => f.ReviewText).HasMaxLength(2000);
             e.HasOne(f => f.Learner)

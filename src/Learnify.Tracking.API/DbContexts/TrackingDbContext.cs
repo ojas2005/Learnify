@@ -14,7 +14,7 @@ public class TrackingDbContext : DbContext
     {
         mb.Entity<LessonWatchRecord>(e =>
         {
-            e.ToTable("LessonWatchRecords");
+            e.ToTable("Tracking_Progress");
             e.HasKey(r => r.Id);
             // this index covers the most common query - did this learner watch this lesson?
             e.HasIndex(r => new { r.LearnerId, r.LessonId }).IsUnique();

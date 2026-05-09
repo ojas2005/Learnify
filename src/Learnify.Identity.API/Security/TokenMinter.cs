@@ -86,10 +86,12 @@ public sealed class TokenMinter
         return
         [
             new(System.Security.Claims.ClaimTypes.NameIdentifier, account.Id.ToString()),
+            new(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, account.Id.ToString()),
             new(System.Security.Claims.ClaimTypes.Email, account.EmailAddress),
             new(System.Security.Claims.ClaimTypes.Name, account.DisplayName),
             new(System.Security.Claims.ClaimTypes.Role, account.Role.ToString()),
-            new(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
+            new("role", account.Role.ToString().ToLowerInvariant()),
+            new(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         ];
     }
 }

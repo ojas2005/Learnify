@@ -6,8 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<TrackingDbContext>(opts =>
-    opts.UseNpgsql(builder.Configuration.GetConnectionString("TrackingDb")));
+    opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddLearnifyJwtAuth(builder.Configuration);
 builder.Services.AddScoped<IWatchRecordStore, WatchRecordStore>();
@@ -18,6 +19,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<TrackingDbContext>();
+    db.Database.EnsureCreated();
+}
 if (app.Environment.IsDevelopment()) { app.UseSwagger(); app.UseSwaggerUI(); }
 app.UseHttpsRedirection();
 app.UseAuthentication();

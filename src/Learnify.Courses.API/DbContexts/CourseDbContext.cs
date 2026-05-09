@@ -18,7 +18,7 @@ public class CourseDbContext : DbContext
     {
         mb.Entity<CourseOffering>(e =>
         {
-            e.ToTable("CourseOfferings");
+            e.ToTable("Courses_Catalog");
             e.HasKey(c => c.Id);
             e.Property(c => c.ListPrice).HasColumnType("decimal(10,2)");
             e.HasOne(c => c.Author).WithMany(a => a.AuthoredCourses).HasForeignKey(c => c.AuthorId).OnDelete(DeleteBehavior.Restrict);
@@ -26,27 +26,27 @@ public class CourseDbContext : DbContext
 
         mb.Entity<LearnerAccount>(e =>
         {
-            e.ToTable("LearnerAccounts");
+            e.ToTable("Identity_Accounts");
             e.HasKey(l => l.Id);
         });
 
         mb.Entity<CurriculumLesson>(e =>
         {
-            e.ToTable("CurriculumLessons");
+            e.ToTable("Curriculum_Lessons");
             e.HasKey(l => l.Id);
             e.HasOne(l => l.Course).WithMany(c => c.Lessons).HasForeignKey(l => l.CourseId).OnDelete(DeleteBehavior.Cascade);
         });
 
         mb.Entity<CourseFeedback>(e =>
         {
-            e.ToTable("CourseFeedback");
+            e.ToTable("Reviews_Comments");
             e.HasKey(f => f.Id);
             e.HasOne(f => f.Course).WithMany(c => c.FeedbackEntries).HasForeignKey(f => f.CourseId).OnDelete(DeleteBehavior.Cascade);
         });
 
         mb.Entity<CourseRegistration>(e =>
         {
-            e.ToTable("CourseRegistrations");
+            e.ToTable("Registration_Enrollments");
             e.HasKey(r => r.Id);
             e.HasOne(r => r.Course).WithMany(c => c.Registrations).HasForeignKey(r => r.CourseId).OnDelete(DeleteBehavior.Cascade);
             e.HasOne(r => r.Learner).WithMany(l => l.CourseRegistrations).HasForeignKey(r => r.LearnerId).OnDelete(DeleteBehavior.Restrict);
@@ -54,7 +54,7 @@ public class CourseDbContext : DbContext
 
         mb.Entity<CourseExam>(e =>
         {
-            e.ToTable("CourseExams");
+            e.ToTable("Exams_Quizzes");
             e.HasKey(ex => ex.Id);
             e.HasOne(ex => ex.Course).WithMany(c => c.Exams).HasForeignKey(ex => ex.CourseId).OnDelete(DeleteBehavior.Cascade);
         });

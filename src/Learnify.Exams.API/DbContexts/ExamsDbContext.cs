@@ -16,7 +16,7 @@ public class ExamsDbContext : DbContext
     {
         mb.Entity<CourseExam>(e =>
         {
-            e.ToTable("CourseExams");
+            e.ToTable("Exams_Quizzes");
             e.HasKey(ex => ex.Id);
             e.Property(ex => ex.Title).HasMaxLength(200);
             e.HasMany(ex => ex.Attempts).WithOne(a => a.Exam).HasForeignKey(a => a.ExamId);
@@ -24,7 +24,7 @@ public class ExamsDbContext : DbContext
 
         mb.Entity<ExamAttempt>(e =>
         {
-            e.ToTable("ExamAttempts");
+            e.ToTable("Exams_Attempts");
             e.HasKey(a => a.Id);
             // index learner and exam for quick lookups
             e.HasIndex(a => new { a.LearnerId, a.ExamId });

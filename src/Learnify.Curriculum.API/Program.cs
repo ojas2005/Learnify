@@ -7,8 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<CurriculumDbContext>(opts =>
-    opts.UseNpgsql(builder.Configuration.GetConnectionString("CurriculumDb")));
+    opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddLearnifyJwtAuth(builder.Configuration);
 builder.Services.AddScoped<ISyllabusStore, SyllabusStore>();
@@ -19,6 +20,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<CurriculumDbContext>();
+    db.Database.EnsureCreated();
+}
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -32,12 +39,5 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
-// Drop stale cross-service FK constraints
-using (var scope = app.Services.CreateScope())
-{
-    var ctx = scope.ServiceProvider.GetRequiredService<CurriculumDbContext>();
-    try { ctx.Database.ExecuteSqlRaw("ALTER TABLE \"CurriculumLessons\" DROP CONSTRAINT IF EXISTS \"FK_CurriculumLessons_CourseOffering_CourseId\""); } catch { }
-}
 
 app.Run();

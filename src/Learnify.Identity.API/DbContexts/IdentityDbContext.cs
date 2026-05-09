@@ -18,11 +18,36 @@ public class IdentityDbContext : DbContext
     {
         mb.Entity<LearnerAccount>(e =>
         {
-            e.ToTable("LearnerAccounts");
+            e.ToTable("Identity_Accounts");
             e.HasKey(a => a.Id);
             e.HasIndex(a => a.EmailAddress).IsUnique();
             e.Property(a => a.EmailAddress).HasMaxLength(255);
             e.Property(a => a.DisplayName).HasMaxLength(100);
+        });
+
+        mb.Entity<CompletionCredential>(e =>
+        {
+            e.ToTable("Identity_Credentials");
+        });
+
+        mb.Entity<CourseRegistration>(e =>
+        {
+            e.ToTable("Registration_Enrollments");
+        });
+
+        mb.Entity<CourseFeedback>(e =>
+        {
+            e.ToTable("Reviews_Comments");
+        });
+
+        mb.Entity<ExamAttempt>(e =>
+        {
+            e.ToTable("Exams_Attempts");
+        });
+
+        mb.Entity<LessonWatchRecord>(e =>
+        {
+            e.ToTable("Tracking_Progress");
         });
 
         //resolve SQL Server multiple cascade path issues by disabling cascade on certain relationships

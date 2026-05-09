@@ -21,8 +21,9 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 });
 
 //Data
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<IdentityDbContext>(opts =>
-    opts.UseNpgsql(builder.Configuration.GetConnectionString("IdentityDb")));
+    opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Data Protection (required for OAuth correlation through reverse proxy)
 builder.Services.AddDataProtection()
@@ -104,13 +105,20 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+// Ensure tables are created
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
+    db.Database.EnsureCreated();
+}
 app.UseForwardedHeaders();
 app.UseCookiePolicy();
 app.UseSwagger();
 app.UseSwaggerUI(c => 
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json","Learnify Identity API");
-    c.RoutePrefix = string.Empty; //serves swagger ui at root,port-5005
+    c.RoutePrefix = "swagger";
 });
 
 // app.UseHttpsRedirection();

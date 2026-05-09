@@ -24,7 +24,7 @@ public class RegistrationController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Learner")]
+    [Authorize(Roles = "Learner,Instructor,Administrator")]
     public async Task<IActionResult> Enroll([FromBody] EnrollRequest req)
     {
         // sign up a student for a course
@@ -134,7 +134,7 @@ public class RegistrationController : ControllerBase
     }
 
     [HttpPatch("{registrationId:int}/progress")]
-    [Authorize(Roles = "Learner")]
+    [Authorize(Roles = "Learner,Instructor,Administrator")]
     public async Task<IActionResult> UpdateProgress(int registrationId, [FromBody] ProgressUpdate update)
     {
         // update progress for a course
@@ -157,7 +157,7 @@ public class RegistrationController : ControllerBase
     }
 
     [HttpPost("{registrationId:int}/complete")]
-    [Authorize(Roles = "Learner")]
+    [Authorize(Roles = "Learner,Instructor,Administrator")]
     public async Task<IActionResult> MarkComplete(int registrationId)
     {
         // manually finish a course

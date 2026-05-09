@@ -23,7 +23,7 @@ public class RegistrationDbContext : DbContext
         // set up the database table for registrations
         mb.Entity<CourseRegistration>(e =>
         {
-            e.ToTable("CourseRegistrations");
+            e.ToTable("Registration_Enrollments");
             e.HasKey(r => r.Id);
             // make sure a student cant join the same course twice
             e.HasIndex(r => new { r.LearnerId, r.CourseId }).IsUnique();

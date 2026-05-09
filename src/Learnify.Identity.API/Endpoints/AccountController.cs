@@ -205,10 +205,14 @@ public class AccountController : ControllerBase
 
         var info = await HttpContext.AuthenticateAsync("ExternalCookie");
         if (info?.Principal == null)
+        {
+            _logger.LogWarning("GoogleCallback: No principal found in ExternalCookie.");
             return BadRequest(new { message = "Error loading external login information." });
+        }
 
         var email = info.Principal.FindFirstValue(ClaimTypes.Email);
         var name = info.Principal.FindFirstValue(ClaimTypes.Name);
+        _logger.LogInformation("GoogleCallback: Received login for {Email}", email);
 
         // Sign out from the temporary cookie
         await HttpContext.SignOutAsync("ExternalCookie");

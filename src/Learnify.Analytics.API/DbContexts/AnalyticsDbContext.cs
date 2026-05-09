@@ -15,6 +15,31 @@ public class AnalyticsDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
+        mb.Entity<AuditEntry>(e =>
+        {
+            e.ToTable("Analytics_AuditLogs");
+        });
+
+        mb.Entity<LearnerAccount>(e =>
+        {
+            e.ToTable("Identity_Accounts");
+        });
+
+        mb.Entity<CourseOffering>(e =>
+        {
+            e.ToTable("Courses_Catalog");
+        });
+
+        mb.Entity<CourseRegistration>(e =>
+        {
+            e.ToTable("Registration_Enrollments");
+        });
+
+        mb.Entity<CourseFeedback>(e =>
+        {
+            e.ToTable("Reviews_Comments");
+        });
+
         // Configure relationships for analytics queries
         mb.Entity<CourseOffering>()
             .HasMany(c => c.Registrations)

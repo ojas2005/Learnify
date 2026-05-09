@@ -101,11 +101,10 @@ public class CourseStore : ICourseStore
     public async Task AddAuthorWithIdAsync(int authorId, string displayName, string email)
     {
         var sql = @"
-            INSERT INTO ""LearnerAccounts"" (""Id"", ""DisplayName"", ""EmailAddress"", ""HashedPassword"", ""Role"", ""ProfilePictureUrl"", ""IsActive"", ""RegisteredOn"")
-            VALUES ({0}, {1}, {2}, 'synced_from_identity', 1, NULL, true, CURRENT_TIMESTAMP);
-            
-            -- Sync the sequence so next auto-inc doesn't fail
-            SELECT setval(pg_get_serial_sequence('""LearnerAccounts""', 'Id'), MAX(""Id"")) FROM ""LearnerAccounts"";
+            SET IDENTITY_INSERT LearnerAccounts ON;
+            INSERT INTO LearnerAccounts (Id, DisplayName, EmailAddress, HashedPassword, Role, ProfilePictureUrl, IsActive, RegisteredOn)
+            VALUES ({0}, {1}, {2}, 'synced_from_identity', 1, NULL, 1, GETDATE());
+            SET IDENTITY_INSERT LearnerAccounts OFF;
         ";
         
         await _db.Database.ExecuteSqlRawAsync(sql, authorId, displayName, email);

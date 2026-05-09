@@ -6,8 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<CourseDbContext>(opts =>
-    opts.UseNpgsql(builder.Configuration.GetConnectionString("CoursesDb")));
+    opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddLearnifyJwtAuth(builder.Configuration);
 
@@ -19,6 +20,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<CourseDbContext>();
+    try {
+        db.Database.EnsureCreated();
+    } catch {
+        // Fallback or ignore if already exists
+    }
+}
 
 if (app.Environment.IsDevelopment()) { app.UseSwagger(); app.UseSwaggerUI(); }
 

@@ -72,6 +72,13 @@ public class IdentityBroker : IIdentityBroker
             return OperationResult<string>.AccessDenied("Email or password is incorrect");
         }
 
+        // Prevent FormatException if password is not a valid base64 (e.g. social login placeholder)
+        if (string.IsNullOrEmpty(account.HashedPassword) || account.HashedPassword.Length < 20 || !account.HashedPassword.Contains('='))
+        {
+             _log.LogWarning("Invalid password hash format for account {AccountId}", account.Id);
+             return OperationResult<string>.AccessDenied("Email or password is incorrect");
+        }
+
         var verificationResult = _passwordHasher.VerifyHashedPassword(
             account,account.HashedPassword,rawPassword);
 

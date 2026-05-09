@@ -8,9 +8,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // connect to the database
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<RegistrationDbContext>(opts =>
 {
-    opts.UseNpgsql(builder.Configuration.GetConnectionString("RegistrationDb"));
+    opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
 // setup security and shared services
@@ -26,6 +27,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<RegistrationDbContext>();
+    db.Database.EnsureCreated();
+}
 
 // show swagger help docs if in development
 if (app.Environment.IsDevelopment())
@@ -45,24 +52,5 @@ app.MapGet("/", () =>
 });
 
 app.MapControllers();
-
-// start the service - drop stale shadow FK columns/constraints from the DB
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<RegistrationDbContext>();
-    var sqls = new[]
-    {
-        "ALTER TABLE \"CourseRegistrations\" DROP CONSTRAINT IF EXISTS \"FK_CourseRegistrations_CourseOffering_CourseId\"",
-        "ALTER TABLE \"CourseRegistrations\" DROP CONSTRAINT IF EXISTS \"FK_CourseRegistrations_LearnerAccount_LearnerId\"",
-        "ALTER TABLE \"CourseRegistrations\" DROP CONSTRAINT IF EXISTS \"FK_CourseRegistrations_LearnerAccounts_LearnerAccountId\"",
-        "ALTER TABLE \"CourseRegistrations\" DROP CONSTRAINT IF EXISTS \"FK_CourseRegistrations_LearnerAccounts_LearnerId\"",
-        "ALTER TABLE \"CourseRegistrations\" DROP COLUMN IF EXISTS \"CourseOfferingId\"",
-        "ALTER TABLE \"CourseRegistrations\" DROP COLUMN IF EXISTS \"LearnerAccountId\"",
-    };
-    foreach (var sql in sqls)
-    {
-        try { context.Database.ExecuteSqlRaw(sql); } catch { /* ignore */ }
-    }
-}
 
 app.Run();

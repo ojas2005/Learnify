@@ -16,7 +16,7 @@ public class CurriculumDbContext : DbContext
     {
         mb.Entity<CurriculumLesson>(e =>
         {
-            e.ToTable("CurriculumLessons");
+            e.ToTable("Curriculum_Lessons");
             e.HasKey(l => l.Id);
             e.Property(l => l.Title).HasMaxLength(200);
             e.HasIndex(l => new { l.CourseId, l.SequencePosition });
