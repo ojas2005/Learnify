@@ -222,7 +222,7 @@ public class AccountController : ControllerBase
             return ConvertFailure(result);
 
         // Redirect back to the Vite UI with token
-        var uiUrl = "http://localhost:5173";
+        var uiUrl = "http://localhost:5174";
         return Redirect($"{uiUrl}/#login-success?token={Uri.EscapeDataString(result.Payload!)}");
     }
 
