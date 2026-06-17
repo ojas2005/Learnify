@@ -1,0 +1,272 @@
+Starting Learnify Microservices and API Gateway...
+Waiting for microservices to initialize...
+Using launch settings from Learnify.Tracking.API/Properties/launchSettings.json...
+Building...
+Using launch settings from Learnify.Registration.API/Properties/launchSettings.json...
+Using launch settings from Learnify.Analytics.API/Properties/launchSettings.json...
+Building...
+Using launch settings from Learnify.Exams.API/Properties/launchSettings.json...
+Using launch settings from Learnify.Identity.API/Properties/launchSettings.json...
+Building...
+Using launch settings from Learnify.Curriculum.API/Properties/launchSettings.json...
+Building...
+Building...
+Using launch settings from Learnify.Reviews.API/Properties/launchSettings.json...
+Using launch settings from Learnify.Courses.API/Properties/launchSettings.json...
+Building...
+Building...
+Building...
+/Users/ojastiwari/Learnify/src/Learnify.Identity.API/Endpoints/AccountController.cs(201,98): warning CS8625: Cannot convert null literal to non-nullable reference type. [/Users/ojastiwari/Learnify/src/Learnify.Identity.API/Learnify.Identity.API.csproj]
+/Users/ojastiwari/Learnify/src/Learnify.Identity.API/Endpoints/AccountController.cs(220,64): warning CS8604: Possible null reference argument for parameter 'email' in 'Task<OperationResult<string>> IIdentityBroker.ProcessExternalLoginAsync(string email, string displayName, string role = "Learner")'. [/Users/ojastiwari/Learnify/src/Learnify.Identity.API/Learnify.Identity.API.csproj]
+/Users/ojastiwari/Learnify/src/Learnify.Identity.API/Endpoints/AccountController.cs(220,71): warning CS8604: Possible null reference argument for parameter 'displayName' in 'Task<OperationResult<string>> IIdentityBroker.ProcessExternalLoginAsync(string email, string displayName, string role = "Learner")'. [/Users/ojastiwari/Learnify/src/Learnify.Identity.API/Learnify.Identity.API.csproj]
+Unhandled exception. System.ArgumentException: Format of the initialization string does not conform to specification starting at index 0.
+   at System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   at System.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at System.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms, Boolean useOdbcRules)
+   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString(String value)
+   at MySqlConnector.MySqlConnectionStringBuilder..ctor(String connectionString) in /_/src/MySqlConnector/MySqlConnectionStringBuilder.cs:line 33
+   at Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(String connectionString)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1(DbContextOptionsBuilder opts) in /Users/ojastiwari/Learnify/src/Learnify.Curriculum.API/Program.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass1_0`2.<AddDbContext>b__0(IServiceProvider _, DbContextOptionsBuilder b)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.CreateDbContextOptions[TContext](IServiceProvider applicationServiceProvider, Action`2 optionsAction)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass17_0`1.<AddCoreServices>b__0(IServiceProvider p)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Program.<Main>$(String[] args) in /Users/ojastiwari/Learnify/src/Learnify.Curriculum.API/Program.cs:line 29
+Unhandled exception. System.ArgumentException: Format of the initialization string does not conform to specification starting at index 0.
+   at System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   at System.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at System.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms, Boolean useOdbcRules)
+   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString(String value)
+   at MySqlConnector.MySqlConnectionStringBuilder..ctor(String connectionString) in /_/src/MySqlConnector/MySqlConnectionStringBuilder.cs:line 33
+   at Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(String connectionString)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1(DbContextOptionsBuilder opts) in /Users/ojastiwari/Learnify/src/Learnify.Tracking.API/Program.cs:line 13
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass1_0`2.<AddDbContext>b__0(IServiceProvider _, DbContextOptionsBuilder b)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.CreateDbContextOptions[TContext](IServiceProvider applicationServiceProvider, Action`2 optionsAction)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass17_0`1.<AddCoreServices>b__0(IServiceProvider p)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Program.<Main>$(String[] args) in /Users/ojastiwari/Learnify/src/Learnify.Tracking.API/Program.cs:line 28
+Unhandled exception. System.ArgumentException: Format of the initialization string does not conform to specification starting at index 0.
+   at System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   at System.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at System.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms, Boolean useOdbcRules)
+   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString(String value)
+   at MySqlConnector.MySqlConnectionStringBuilder..ctor(String connectionString) in /_/src/MySqlConnector/MySqlConnectionStringBuilder.cs:line 33
+   at Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(String connectionString)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1(DbContextOptionsBuilder opts) in /Users/ojastiwari/Learnify/src/Learnify.Exams.API/Program.cs:line 13
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass1_0`2.<AddDbContext>b__0(IServiceProvider _, DbContextOptionsBuilder b)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.CreateDbContextOptions[TContext](IServiceProvider applicationServiceProvider, Action`2 optionsAction)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass17_0`1.<AddCoreServices>b__0(IServiceProvider p)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Program.<Main>$(String[] args) in /Users/ojastiwari/Learnify/src/Learnify.Exams.API/Program.cs:line 29
+Unhandled exception. System.ArgumentException: Format of the initialization string does not conform to specification starting at index 0.
+   at System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   at System.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at System.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms, Boolean useOdbcRules)
+   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString(String value)
+   at MySqlConnector.MySqlConnectionStringBuilder..ctor(String connectionString) in /_/src/MySqlConnector/MySqlConnectionStringBuilder.cs:line 33
+   at Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(String connectionString)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1(DbContextOptionsBuilder opts) in /Users/ojastiwari/Learnify/src/Learnify.Courses.API/Program.cs:line 13
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass1_0`2.<AddDbContext>b__0(IServiceProvider _, DbContextOptionsBuilder b)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.CreateDbContextOptions[TContext](IServiceProvider applicationServiceProvider, Action`2 optionsAction)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass17_0`1.<AddCoreServices>b__0(IServiceProvider p)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Program.<Main>$(String[] args) in /Users/ojastiwari/Learnify/src/Learnify.Courses.API/Program.cs:line 29
+Unhandled exception. System.ArgumentException: Format of the initialization string does not conform to specification starting at index 0.
+   at System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   at System.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at System.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms, Boolean useOdbcRules)
+   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString(String value)
+   at MySqlConnector.MySqlConnectionStringBuilder..ctor(String connectionString) in /_/src/MySqlConnector/MySqlConnectionStringBuilder.cs:line 33
+   at Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(String connectionString)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1(DbContextOptionsBuilder opts) in /Users/ojastiwari/Learnify/src/Learnify.Identity.API/Program.cs:line 26
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass1_0`2.<AddDbContext>b__0(IServiceProvider _, DbContextOptionsBuilder b)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.CreateDbContextOptions[TContext](IServiceProvider applicationServiceProvider, Action`2 optionsAction)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass17_0`1.<AddCoreServices>b__0(IServiceProvider p)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Program.<Main>$(String[] args) in /Users/ojastiwari/Learnify/src/Learnify.Identity.API/Program.cs:line 112
+Unhandled exception. System.ArgumentException: Format of the initialization string does not conform to specification starting at index 0.
+   at System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   at System.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at System.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms, Boolean useOdbcRules)
+   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString(String value)
+   at MySqlConnector.MySqlConnectionStringBuilder..ctor(String connectionString) in /_/src/MySqlConnector/MySqlConnectionStringBuilder.cs:line 33
+   at Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(String connectionString)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1(DbContextOptionsBuilder opts) in /Users/ojastiwari/Learnify/src/Learnify.Registration.API/Program.cs:line 16
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass1_0`2.<AddDbContext>b__0(IServiceProvider _, DbContextOptionsBuilder b)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.CreateDbContextOptions[TContext](IServiceProvider applicationServiceProvider, Action`2 optionsAction)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass17_0`1.<AddCoreServices>b__0(IServiceProvider p)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Program.<Main>$(String[] args) in /Users/ojastiwari/Learnify/src/Learnify.Registration.API/Program.cs:line 36
+Unhandled exception. System.ArgumentException: Format of the initialization string does not conform to specification starting at index 0.
+   at System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   at System.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at System.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms, Boolean useOdbcRules)
+   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString(String value)
+   at MySqlConnector.MySqlConnectionStringBuilder..ctor(String connectionString) in /_/src/MySqlConnector/MySqlConnectionStringBuilder.cs:line 33
+   at Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(String connectionString)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1(DbContextOptionsBuilder options) in /Users/ojastiwari/Learnify/src/Learnify.Analytics.API/Program.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass1_0`2.<AddDbContext>b__0(IServiceProvider _, DbContextOptionsBuilder b)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.CreateDbContextOptions[TContext](IServiceProvider applicationServiceProvider, Action`2 optionsAction)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass17_0`1.<AddCoreServices>b__0(IServiceProvider p)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Program.<Main>$(String[] args) in /Users/ojastiwari/Learnify/src/Learnify.Analytics.API/Program.cs:line 32
+Unhandled exception. System.ArgumentException: Format of the initialization string does not conform to specification starting at index 0.
+   at System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   at System.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at System.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms, Boolean useOdbcRules)
+   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString(String value)
+   at MySqlConnector.MySqlConnectionStringBuilder..ctor(String connectionString) in /_/src/MySqlConnector/MySqlConnectionStringBuilder.cs:line 33
+   at Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(String connectionString)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1(DbContextOptionsBuilder options) in /Users/ojastiwari/Learnify/src/Learnify.Reviews.API/Program.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass1_0`2.<AddDbContext>b__0(IServiceProvider _, DbContextOptionsBuilder b)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.CreateDbContextOptions[TContext](IServiceProvider applicationServiceProvider, Action`2 optionsAction)
+   at Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.<>c__DisplayClass17_0`1.<AddCoreServices>b__0(IServiceProvider p)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitScopeCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService(IServiceProvider provider, Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService[T](IServiceProvider provider)
+   at Program.<Main>$(String[] args) in /Users/ojastiwari/Learnify/src/Learnify.Reviews.API/Program.cs:line 33
+Starting API Gateway on http://localhost:5010...
+All services are running. Press Ctrl+C to stop.
+Using launch settings from Learnify.Gateway/Properties/launchSettings.json...
+Building...
+info: Yarp.ReverseProxy.Configuration.ConfigProvider.ConfigurationConfigProvider[1]
+      Loading proxy data from config.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5010
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /Users/ojastiwari/Learnify/src/Learnify.Gateway
+info: Yarp.ReverseProxy.Forwarder.HttpForwarder[9]
+      Proxying to http://localhost:5001/api/accounts/me HTTP/2 RequestVersionOrLower 
+warn: Yarp.ReverseProxy.Forwarder.HttpForwarder[48]
+      Request: An error was encountered before receiving a response.
+      System.Net.Http.HttpRequestException: Connection refused (localhost:5001)
+       ---> System.Net.Sockets.SocketException (61): Connection refused
+         at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+         at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+         at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+         --- End of inner exception stack trace ---
+         at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+         at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+         at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+         at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+         at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+         at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+         at System.Net.Http.DiagnosticsHandler.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+         at Yarp.ReverseProxy.Forwarder.HttpForwarder.SendAsync(HttpContext context, String destinationPrefix, HttpMessageInvoker httpClient, ForwarderRequestConfig requestConfig, HttpTransformer transformer, CancellationToken cancellationToken)
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...

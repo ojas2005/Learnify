@@ -7,6 +7,10 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+add_lesson.sh
+get_token.sh
+test_api.py
+test_enroll.py
 
 # =========================
 

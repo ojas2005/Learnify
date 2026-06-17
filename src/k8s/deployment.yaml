@@ -1,0 +1,352 @@
+apiVersion: v1
+kind: List
+items:
+# Identity Service
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: identity-service
+    labels:
+      app: identity
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: identity
+    template:
+      metadata:
+        labels:
+          app: identity
+      spec:
+        containers:
+        - name: identity
+          image: identity-service:latest
+          ports:
+          - containerPort: 8080
+          envFrom:
+          - secretRef:
+              name: learnify-secrets
+          env:
+          - name: Gateway__Url
+            value: "http://gateway-service:8080"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: identity-service
+  spec:
+    selector:
+      app: identity
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+# Courses Service
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: courses-service
+    labels:
+      app: courses
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: courses
+    template:
+      metadata:
+        labels:
+          app: courses
+      spec:
+        containers:
+        - name: courses
+          image: courses-service:latest
+          ports:
+          - containerPort: 8080
+          envFrom:
+          - secretRef:
+              name: learnify-secrets
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: courses-service
+  spec:
+    selector:
+      app: courses
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+# Curriculum Service
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: curriculum-service
+    labels:
+      app: curriculum
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: curriculum
+    template:
+      metadata:
+        labels:
+          app: curriculum
+      spec:
+        containers:
+        - name: curriculum
+          image: curriculum-service:latest
+          ports:
+          - containerPort: 8080
+          envFrom:
+          - secretRef:
+              name: learnify-secrets
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: curriculum-service
+  spec:
+    selector:
+      app: curriculum
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+# Exams Service
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: exams-service
+    labels:
+      app: exams
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: exams
+    template:
+      metadata:
+        labels:
+          app: exams
+      spec:
+        containers:
+        - name: exams
+          image: exams-service:latest
+          ports:
+          - containerPort: 8080
+          envFrom:
+          - secretRef:
+              name: learnify-secrets
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: exams-service
+  spec:
+    selector:
+      app: exams
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+# Registration Service
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: registration-service
+    labels:
+      app: registration
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: registration
+    template:
+      metadata:
+        labels:
+          app: registration
+      spec:
+        containers:
+        - name: registration
+          image: registration-service:latest
+          ports:
+          - containerPort: 8080
+          envFrom:
+          - secretRef:
+              name: learnify-secrets
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: registration-service
+  spec:
+    selector:
+      app: registration
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+# Reviews Service
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: reviews-service
+    labels:
+      app: reviews
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: reviews
+    template:
+      metadata:
+        labels:
+          app: reviews
+      spec:
+        containers:
+        - name: reviews
+          image: reviews-service:latest
+          ports:
+          - containerPort: 8080
+          envFrom:
+          - secretRef:
+              name: learnify-secrets
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: reviews-service
+  spec:
+    selector:
+      app: reviews
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+# Tracking Service
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: tracking-service
+    labels:
+      app: tracking
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: tracking
+    template:
+      metadata:
+        labels:
+          app: tracking
+      spec:
+        containers:
+        - name: tracking
+          image: tracking-service:latest
+          ports:
+          - containerPort: 8080
+          envFrom:
+          - secretRef:
+              name: learnify-secrets
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: tracking-service
+  spec:
+    selector:
+      app: tracking
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+# Analytics Service
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: analytics-service
+    labels:
+      app: analytics
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: analytics
+    template:
+      metadata:
+        labels:
+          app: analytics
+      spec:
+        containers:
+        - name: analytics
+          image: analytics-service:latest
+          ports:
+          - containerPort: 8080
+          envFrom:
+          - secretRef:
+              name: learnify-secrets
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: analytics-service
+  spec:
+    selector:
+      app: analytics
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+# Gateway Service
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: gateway-service
+    labels:
+      app: gateway
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: gateway
+    template:
+      metadata:
+        labels:
+          app: gateway
+      spec:
+        containers:
+        - name: gateway
+          image: gateway-service:latest
+          ports:
+          - containerPort: 8080
+          env:
+          - name: ReverseProxy__Clusters__identity-cluster__Destinations__destination1__Address
+            value: "http://identity-service:8080"
+          - name: ReverseProxy__Clusters__courses-cluster__Destinations__destination1__Address
+            value: "http://courses-service:8080"
+          - name: ReverseProxy__Clusters__curriculum-cluster__Destinations__destination1__Address
+            value: "http://curriculum-service:8080"
+          - name: ReverseProxy__Clusters__exams-cluster__Destinations__destination1__Address
+            value: "http://exams-service:8080"
+          - name: ReverseProxy__Clusters__registration-cluster__Destinations__destination1__Address
+            value: "http://registration-service:8080"
+          - name: ReverseProxy__Clusters__reviews-cluster__Destinations__destination1__Address
+            value: "http://reviews-service:8080"
+          - name: ReverseProxy__Clusters__tracking-cluster__Destinations__destination1__Address
+            value: "http://tracking-service:8080"
+          - name: ReverseProxy__Clusters__analytics-cluster__Destinations__destination1__Address
+            value: "http://analytics-service:8080"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: gateway-service
+  spec:
+    selector:
+      app: gateway
+    ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
